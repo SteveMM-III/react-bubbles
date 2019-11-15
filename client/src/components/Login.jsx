@@ -1,53 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { LoginFunction } from '../actions';
 
-class Login extends React.Component {
-  state = {
-    credentials: {
-      username: 'Lambda School',
-      password: 'i<3Lambd4'
-    }
+const Login = props => {
+  const [credentials, setCredentials] = useState({ username: 'Lambda School', password: 'i<3Lambd4' });
+
+  const dispatch = props.dispatch;
+
+  const handleChange = e => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value
+    });
   };
 
-  handleChange = e => {
-    this.setState( {
-      credentials: {
-        ...this.state.credentials,
-        [e.target.name]: e.target.value
-      }
-    } );
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    this.props.dispatch( LoginFunction( this.state.credentials.username, this.state.credentials.password ) )
-    this.props.history.push( '/protected' );
+    dispatch( LoginFunction( credentials.username, credentials.password, props.history ) );
   };
 
-  render() {
-    return (
-      <div>
-        <form onSubmit={ this.handleSubmit }>
-          <input
-            type="text"
-            name="username"
-            placeholder='username'
-            value={ this.state.credentials.username }
-            onChange={ this.handleChange }
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder='password'
-            value={ this.state.credentials.password }
-            onChange={ this.handleChange }
-          />
-          <button>Log in</button>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <form onSubmit={ handleSubmit }>
+        <input
+          type="text"
+          name="username"
+          placeholder='username'
+          value={ credentials.username }
+          onChange={ handleChange }
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder='password'
+          value={ credentials.password }
+          onChange={ handleChange }
+        />
+        <button>Log in</button>
+      </form>
+    </div>
+  );
 }
 
-export default connect ( state => state )( Login );
+export default connect(state => state)(Login);

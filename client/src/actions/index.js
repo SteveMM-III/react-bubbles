@@ -22,10 +22,15 @@ export const DELETE_FAILED        = 'DELETE_FAILED';
 export const loginLoading   = () => ( { type: LOGIN_LOADING } );
 export const colorsLoading = () => ( { type: FETCH_COLORS_LOADING } );
 
-export const loginSuccess = data => ( {
-  type: LOGIN_SUCCESS,
-  payload: data
-} );
+export const loginSuccess = ( data, history ) => {
+  return dispatch => {
+    dispatch( {
+      type: LOGIN_SUCCESS,
+      payload: data
+    } );
+    history.push( '/protected' );
+  }
+};
 
 export const loginFailure = error => ( {
   type: LOGIN_FAILED,
@@ -80,13 +85,13 @@ const axiosWithAuth = () => {
   } );
 };
 
-export function LoginFunction( name, pass ) {
+export function LoginFunction( name, pass, history ) {
   return function( dispatch ) {
     dispatch( loginLoading() );
 
     return axios
       .post( 'http://localhost:5000/api/login', { username: name, password: pass } )
-      .then ( res   => dispatch( loginSuccess( res.data.payload ) ) )
+      .then ( res   => dispatch( loginSuccess( res.data.payload, history ) ) )
       .catch( error => dispatch( loginFailure( error            ) ) );
   }
 }
@@ -135,8 +140,7 @@ export function DeleteColor( id ) {
 
     return authAxios
       .delete( `http://localhost:5000/api/colors/${ id }` )
-      // .then( res => console.log( res ) )
-      .then ( res   => dispatch( colorDeleteSuccess( res ) ) )
+      .then ( res   => dispatch( colorDeleteSuccess( res      ) ) )
       .catch( error => dispatch( colorDeleteFailure( error    ) ) );
   }
 }

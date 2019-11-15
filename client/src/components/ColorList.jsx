@@ -29,7 +29,6 @@ const ColorList = ({ colors, dispatch }) => {
   };
 
   const deleteColor = color => {
-    console.log( color );
     async function del() {
       await dispatch( DeleteColor( color.id ) );
     }
