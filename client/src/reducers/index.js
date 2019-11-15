@@ -1,5 +1,17 @@
 
-import { FETCH_COLORS_LOADING, FETCH_COLORS_SUCCESS, FETCH_COLORS_FAILED, LOGIN_LOADING, LOGIN_SUCCESS, LOGIN_FAILED, ADD, ADD_FAILED } from '../actions';
+import {
+  FETCH_COLORS_LOADING,
+  FETCH_COLORS_SUCCESS,
+  FETCH_COLORS_FAILED,
+  LOGIN_LOADING,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  ADD,
+  ADD_FAILED,
+  EDIT,
+  EDIT_FAILED,
+  DELETE,
+  DELETE_FAILED } from '../actions';
 
 export const initialState = {
   colors: [],
@@ -53,9 +65,32 @@ export const reducer = ( state = initialState, action ) => {
     case ADD:
       return {
         ...state,
-        colors: [ ...state.colors, action.payload ]
+        colors: [ ...state.colors, action.payload ],
+        error: null
       }
     case ADD_FAILED:
+      return {
+        ...state,
+        error: action.payload
+      }
+    case EDIT:
+      return {
+        ...state,
+        colors: state.colors.map( color => color.id === action.payload.id ? action.payload : color ),
+        error: null
+      }
+    case EDIT_FAILED:
+      return {
+        ...state,
+        error: action.payload
+      }
+    case DELETE:
+      return {
+        ...state,
+        colors: state.colors.filter( color => color.id !== action.payload.id ),
+        error: null
+      }
+    case DELETE_FAILED:
       return {
         ...state,
         error: action.payload
