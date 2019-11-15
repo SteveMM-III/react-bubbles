@@ -85,9 +85,10 @@ export const reducer = ( state = initialState, action ) => {
         error: action.payload
       }
     case DELETE:
+      console.log(state.colors.filter( color => color.id !== action.payload.data ));
       return {
         ...state,
-        colors: state.colors.filter( color => color.id !== action.payload.id ),
+        colors: state.colors.filter( color => color.id !== action.payload.data ),
         error: null
       }
     case DELETE_FAILED:

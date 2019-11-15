@@ -131,11 +131,12 @@ export function EditColor( color ) {
 export function DeleteColor( id ) {
   return function( dispatch ) {
     const authAxios = axiosWithAuth();
+    console.log( id );
 
     return authAxios
-      .put( `http://localhost:5000/api/colors/${ id }` )
+      .delete( `http://localhost:5000/api/colors/${ id }` )
       // .then( res => console.log( res ) )
-      .then ( res   => dispatch( colorDeleteSuccess( res.data ) ) )
+      .then ( res   => dispatch( colorDeleteSuccess( res ) ) )
       .catch( error => dispatch( colorDeleteFailure( error    ) ) );
   }
 }
