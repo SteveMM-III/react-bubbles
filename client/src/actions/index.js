@@ -4,9 +4,9 @@ export const LOGIN_LOADING         = 'LOGIN_LOADING';
 export const LOGIN_SUCCESS         = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED          = 'LOGIN_FAILED';
 
-export const FETCH_FRIENDS_LOADING = 'FETCH_FRIENDS_LOADING';
-export const FETCH_FRIENDS_SUCCESS = 'FETCH_FRIENDS_SUCCESS';
-export const FETCH_FRIENDS_FAILED  = 'FETCH_FRIENDS_FAILED';
+export const FETCH_COLORS_LOADING = 'FETCH_COLORS_LOADING';
+export const FETCH_COLORS_SUCCESS = 'FETCH_COLORS_SUCCESS';
+export const FETCH_COLORS_FAILED  = 'FETCH_COLORS_FAILED';
 
 export const ADD                   = 'ADD';
 export const ADD_FAILED            = 'ADD_FAILED';
@@ -14,15 +14,15 @@ export const ADD_FAILED            = 'ADD_FAILED';
 
 
 export const loginLoading   = () => ( { type: LOGIN_LOADING } );
-export const friendsLoading = () => ( { type: FETCH_FRIENDS_LOADING } );
+export const colorsLoading = () => ( { type: FETCH_COLORS_LOADING } );
 
 export const loginSuccess = data => ( {
   type: LOGIN_SUCCESS,
   payload: data
 } );
 
-export const friendsLoadSuccess = data => ( {
-  type: FETCH_FRIENDS_SUCCESS,
+export const colorsLoadSuccess = data => ( {
+  type: FETCH_COLORS_SUCCESS,
   payload: data
 } );
 
@@ -31,17 +31,17 @@ export const loginFailure = error => ( {
   payload: error
 } );
 
-export const friendsLoadFailure = error => ( {
-  type: FETCH_FRIENDS_FAILED,
+export const colorsLoadFailure = error => ( {
+  type: FETCH_COLORS_FAILED,
   payload: error
 } );
 
-export const friendAddSuccess = data => ( {
+export const colorAddSuccess = data => ( {
   type: ADD,
   payload: data
 } );
 
-export const friendAddFailure = error => ( {
+export const colorAddFailure = error => ( {
   type: ADD_FAILED,
   payload: error
 } );
@@ -65,28 +65,28 @@ export function login( name, pass ) {
   }
 }
 
-export function fetchFriends( header ) {
+export function fetchColors( header ) {
   return function( dispatch ) {
-    dispatch( friendsLoading() );
+    dispatch( colorsLoading() );
 
     const authAxios = axiosWithAuth();
 
     return authAxios
-      .get( 'http://localhost:5000/api/friends' )
-      .then ( res   => dispatch( friendsLoadSuccess( res.data ) ) )
-      .catch( error => dispatch( friendsLoadFailure( error    ) ) );
+      .get( 'http://localhost:5000/api/colors' )
+      .then ( res   => dispatch( colorsLoadSuccess( res.data ) ) )
+      .catch( error => dispatch( colorsLoadFailure( error    ) ) );
   }
 }
 
 
-export function addFriend( friend ) {
+export function addColor( color ) {
   return function( dispatch ) {
 
     const authAxios = axiosWithAuth();
 
     return authAxios
-      .post( 'http://localhost:5000/api/friends', friend )
-      .then ( res   => dispatch( friendAddSuccess( friend ) ) )
-      .catch( error => dispatch( friendAddFailure( error  ) ) );
+      .post( 'http://localhost:5000/api/colors', color )
+      .then ( res   => dispatch( colorAddSuccess( color ) ) )
+      .catch( error => dispatch( colorAddFailure( error  ) ) );
   }
 }

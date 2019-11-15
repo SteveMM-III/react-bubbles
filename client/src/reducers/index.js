@@ -1,8 +1,8 @@
 
-import { FETCH_FRIENDS_LOADING, FETCH_FRIENDS_SUCCESS, FETCH_FRIENDS_FAILED, LOGIN_LOADING, LOGIN_SUCCESS, LOGIN_FAILED, ADD, ADD_FAILED } from '../actions';
+import { FETCH_COLORS_LOADING, FETCH_COLORS_SUCCESS, FETCH_COLORS_FAILED, LOGIN_LOADING, LOGIN_SUCCESS, LOGIN_FAILED, ADD, ADD_FAILED } from '../actions';
 
 export const initialState = {
-  friends: [],
+  colors: [],
   isLoggedIn: sessionStorage.getItem( 'token' ) ? true : false,
   error: null,
   isFetching: false
@@ -30,30 +30,30 @@ export const reducer = ( state = initialState, action ) => {
         isFetching: false,
         error: action.payload
       }
-    case FETCH_FRIENDS_LOADING:
+    case FETCH_COLORS_LOADING:
       return {
         ...state,
         isFetching: true,
         error: null
       }
-    case FETCH_FRIENDS_SUCCESS:
+    case FETCH_COLORS_SUCCESS:
       return {
         ...state,
-        friends: action.payload,
+        colors: action.payload,
         isFetching: false,
         error: null
       }
-    case FETCH_FRIENDS_FAILED:
+    case FETCH_COLORS_FAILED:
       return {
         ...state,
-        friends: [],
+        colors: [],
         isFetching: false,
         error: action.payload
       }
     case ADD:
       return {
         ...state,
-        friends: [ ...state.friends, action.payload ]
+        colors: [ ...state.colors, action.payload ]
       }
     case ADD_FAILED:
       return {

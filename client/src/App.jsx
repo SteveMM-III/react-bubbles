@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Login from "./components/Login";
 import BubblePage from './components/BubblePage';
+import PrivateRoute from './components/PrivateRoute';
 
 import "./styles.scss";
 
@@ -16,8 +17,6 @@ function App() {
             <Route exact path='/protected' component={ BubblePage } />
           </PrivateRoute>
           <Route exact path='/login' render={ ( props ) =>
-            <Login { ...props } /> } />
-          <Route  render={ ( props ) =>
             <Login { ...props } /> } />
         </Switch>
       </div>
