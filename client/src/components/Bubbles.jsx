@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
 import { Pack } from "@potion/layout";
 import { Svg, Circle } from "@potion/element";
 
-const Bubbles = ({ colors }) => {
+const Bubbles = props => {
+  const colors = props.colors;
+
   const [bubbleData, setBubbleData] = useState([]);
   useEffect(() => {
     const generateBubbleData = colors.map((_, i) => ({
@@ -50,4 +53,4 @@ const Bubbles = ({ colors }) => {
   );
 };
 
-export default Bubbles;
+export default connect( state => state )( Bubbles );

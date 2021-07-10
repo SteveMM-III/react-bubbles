@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { connect } from 'react-redux';
+import { EditColor, DeleteColor } from '../actions';
+
+// import axios from "axios";
 
 const initialColor = {
   color: "",
   code: { hex: "" }
 };
 
-const ColorList = ({ colors, updateColors }) => {
+const ColorList = ({ colors, dispatch }) => {
   console.log(colors);
+
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -18,13 +22,17 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-    // Make a put request to save your updated color
-    // think about where will you get the id from...
-    // where is is saved right now?
+    async function edit() {
+      await dispatch( EditColor( colorToEdit ) );
+    }
+    edit();
   };
 
   const deleteColor = color => {
-    // make a delete request to delete this color
+    async function del() {
+      await dispatch( DeleteColor( color.id ) );
+    }
+    del();
   };
 
   return (
@@ -86,4 +94,4 @@ const ColorList = ({ colors, updateColors }) => {
   );
 };
 
-export default ColorList;
+export default connect( state => state )( ColorList );
